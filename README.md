@@ -22,7 +22,7 @@
 * Automatic game state management
 * Balance tracking & betting system
 
-* ![image](https://github.com/user-attachments/assets/2ab51ae6-cf24-46e1-a3a4-1bd079f253c0)
+ ![image](https://github.com/user-attachments/assets/2ab51ae6-cf24-46e1-a3a4-1bd079f253c0)
 
 
 ## Tech Stack
