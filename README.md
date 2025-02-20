@@ -1,4 +1,4 @@
-# CSFlash - Real-Time Roulette Game 🎲
+# CSFlash - Roulette Game 🎲
 
 *Built this in a few days when I was bored and wanted to experiment with real-time gaming using Node.js. Turned out pretty decent!*
 
