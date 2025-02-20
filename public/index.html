@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Roulette Game</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #0f172a;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+}
+
+nav {
+  background: rgba(30, 41, 59, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 1rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  height: 64px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
+
+.nav-container {
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo span {
+  color: #60a5fa;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-links a {
+  color: #94a3b8;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.nav-links a:hover {
+  color: #ffffff;
+}
+
+.user-balance {
+    background: rgba(37, 99, 235, 0.2);
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    margin-left: 0.75rem;
+    color: #60a5fa;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border: 1px solid rgba(96, 165, 250, 0.2);
+    transition: color 0.3s ease;
+  }
+
+  .balance-increase {
+    color: #22c55e !important;
+  }
+
+  .balance-decrease {
+    color: #ef4444 !important;
+  }
+  
+.user-profile {
+  display: flex;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.6);
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.user-profile:hover {
+  background: rgba(15, 23, 42, 0.8);
+  transform: translateY(-1px);
+}
+
+.user-profile img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  margin-right: 0.75rem;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-profile span {
+  color: #e2e8f0;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.container {
+  margin-left: 13rem;
+  max-width: 1700px;
+  padding: 5rem 1.5rem 2rem;
+}
+
+#game-frame {
+  width: 100%;
+  max-width: 700px;
+  height: 250px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  margin: 2rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: white;
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  background: rgba(30, 41, 59, 0.5);
+}
+
+.betting-input-section {
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 1rem;
+  padding: 2rem;
+  margin: 2rem auto;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 1000px;
+}
+
+.bet-input {
+  width: 100%;
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 0.5rem;
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.bet-input:focus {
+  border-color: #60a5fa;
+}
+
+.bet-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.bet-color {
+  padding: 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.bet-color:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.bet-red {
+  background: linear-gradient(145deg, #ef4444, #dc2626);
+}
+
+.bet-green {
+  background: linear-gradient(145deg, #22c55e, #16a34a);
+}
+
+.bet-black {
+  background: linear-gradient(145deg, #1e293b, #0f172a);
+}
+
+.bet-controls {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.control-button {
+  padding: 0.75rem;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.control-button:hover {
+  background: rgba(30, 41, 59, 0.8);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.chat-container {
+  position: fixed;
+  left: 0;
+  top: 64px;
+  width: 300px;
+  height: calc(100vh - 64px);
+  background: rgba(30, 41, 59, 0.5);
+  backdrop-filter: blur(10px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.25rem;
+}
+
+.chat-input-container {
+  padding: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  gap: 0.5rem;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 0.875rem;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 0.5rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+  font-size: 1rem;
+}
+
+.chat-input:focus {
+  border-color: #60a5fa;
+}
+
+.chat-send {
+  padding: 0.575rem 1rem;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: 500;
+}
+
+.chat-send:hover {
+  background: #1d4ed8;
+}
+
+/* Add to existing CSS */
+.chat-messages {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.chat-message {
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.message-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.message-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.message-username {
+  color: #60a5fa;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.message-time {
+  color: #64748b;
+  font-size: 0.75rem;
+  margin-left: auto;
+}
+
+.message-content {
+  color: #e2e8f0;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-input-container {
+  padding: 1rem;
+}
+
+.chat-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  color: white;
+  font-size: 0.9375rem;
+}
+
+.chat-input:focus {
+  outline: none;
+  border-color: #60a5fa;
+}
+
+.history-title {
+  text-align: center;
+  font-size: 1.125rem;
+  color: #94a3b8;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.history-container {
+  margin: 0 auto 2rem;
+  padding: 1.25rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  max-width: 800px;
+  overflow: hidden;
+}
+
+.history-item {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.history-item:hover {
+  transform: scale(1.1);
+}
+
+.history-red { 
+  background: linear-gradient(145deg, #ef4444, #dc2626);
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+}
+
+.history-black { 
+  background: linear-gradient(145deg, #1e293b, #0f172a);
+  box-shadow: 0 0 15px rgba(30, 41, 59, 0.3);
+}
+
+.history-green { 
+  background: linear-gradient(145deg, #22c55e, #16a34a);
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.3);
+}
+
+.stats-container {
+  text-align: center;
+  margin-bottom: 1.25rem;
+  color: #94a3b8;
+  font-size: 1rem;
+}
+
+.stats-container .stat {
+  display: inline-block;
+  margin: 0 0.75rem;
+  padding: 0.375rem 1rem;
+  border-radius: 1rem;
+  background: rgba(30, 41, 59, 0.3);
+}
+
+.stat.red { color: #ef4444; }
+.stat.green { color: #22c55e; }
+.stat.black { color: #fff; }
+
+.stats-title {
+  color: #64748b;
+  font-size: 0.9375rem;
+  margin-bottom: 0.75rem;
+}
+
+@media (max-width: 1400px) {
+  .chat-container {
+    display: none;
+  }
+
+  .container {
+    margin-left: 0rem;
+  }
+}
+
+@media (max-width: 1500px) {
+  .chat-container {
+    width: 25%;
+  }
+}
+
+@media (max-width: 900px) {
+
+.user-name {
+  display: none;
+}
+
+.user-balance {
+    background: rgba(37, 99, 235, 0.2);
+    padding: 0rem 0.75rem;
+    border-radius: 1rem;
+    /* margin-left: 1.75rem; */
+    color: #60a5fa;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border: 1px solid rgba(96, 165, 250, 0.2);
+    transition: color 0.3s ease;
+  }
+
+  .user-profile {
+  display: flex;
+  align-items: center;
+  /* background: rgba(15, 23, 42, 0.6); */
+  padding: 0.1rem 1rem;
+  border-radius: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+}
+
+@media (max-width: 1000px) {
+  
+  .betting-container {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
+  .container {
+    margin-left: 0rem;
+  }
+
+  .chat-container {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 5rem 1rem 2rem 1rem;
+  }
+  
+  .nav-container {
+    padding: 0 1rem;
+  }
+  
+  .chat-container {
+    display: none;
+  }
+  
+  #game-frame {
+    max-width: 100%;
+    height: 120px;
+  }
+  
+  .betting-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .nav-container {
+    flex-direction: column;
+  }
+  
+  .nav-links {
+    gap: 1rem;
+  }
+}
+
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(96, 165, 250, 0.3);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(96, 165, 250, 0.5);
+}
+
+/* Firefox Scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(96, 165, 250, 0.3) rgba(15, 23, 42, 0.5);
+}
+
+#timer {
+  text-align: center;
+  font-size: 1.75rem;
+  margin: 1.5rem 0;
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+.current-bets-header {
+  margin-bottom: 1.5rem;
+}
+
+.current-bets-header h3 {
+  color: #94a3b8;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.bets-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.bet-column {
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.bet-column-header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+
+.color-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 0.75rem;
+}
+
+.color-indicator.red { background: linear-gradient(145deg, #ef4444, #dc2626); }
+.color-indicator.green { background: linear-gradient(145deg, #22c55e, #16a34a); }
+.color-indicator.black {background: #05070e }
+.bet-column-header span {
+  color: #e2e8f0;
+  font-weight: 500;
+}
+
+.bet-column-header .total-amount {
+  margin-left: auto;
+  color: #94a3b8;
+  font-size: 0.875rem;
+}
+
+.bet-list {
+      max-height: 240px;
+      height: 240px;
+      overflow-y: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .bet-list.full::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      pointer-events: none;
+      background: linear-gradient(to bottom, transparent, rgba(15, 23, 42, 0.95));
+    }
+
+.bet-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  animation: fadeIn 0.3s ease;
+}
+
+.bet-item:last-child {
+  border-top: none;
+}
+
+.bet-user-info {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.bet-user-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-right: 0.75rem;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.bet-user-name {
+  color: #e2e8f0;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.bet-amount {
+  color: #94a3b8;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-container">
+      <a href="#" class="logo">
+        <span>🎲</span> CSFlash
+      </a>
+      <div class="nav-links">
+      </div>
+    </div>
+  </nav>
+
+  <div class="chat-container">
+    <div class="chat-messages">
+      <!-- Messages will be dynamically added here -->
+    </div>
+    <div class="chat-input-container">
+      <input type="text" class="chat-input" placeholder="Type a message...">
+    </div>
+  </div>
+
+  <div class="container">
+    <div id="timer"></div>
+    <div id="game-frame"></div>
+    <div class="history-title">Last 10 rolls</div>
+    <div id="history" class="history-container"></div>
+    <div class="betting-input-section">
+      <input type="number" class="bet-input" placeholder="Enter bet amount">
+      <div class="bet-buttons">
+        <button class="bet-color bet-red">Red (2x)</button>
+        <button class="bet-color bet-green">Green (14x)</button>
+        <button class="bet-color bet-black">Black (2x)</button>
+      </div>
+      <div class="current-bets-container">
+        <div class="bets-grid">
+          <div class="bet-column red-bets">
+            <div class="bet-column-header">
+              <div class="color-indicator red"></div>
+              <span>Red</span>
+              <span class="total-amount">$0.00</span>
+            </div>
+            <div class="bet-list" id="red-bets"></div>
+          </div>
+          <div class="bet-column green-bets">
+            <div class="bet-column-header">
+              <div class="color-indicator green"></div>
+              <span>Green</span>
+              <span class="total-amount">$0.00</span>
+            </div>
+            <div class="bet-list" id="green-bets"></div>
+          </div>
+          <div class="bet-column black-bets">
+            <div class="bet-column-header">
+              <div class="color-indicator black"></div>
+              <span>Black</span>
+              <span class="total-amount">$0.00</span>
+            </div>
+            <div class="bet-list" id="black-bets"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+  const socket = io();
+const frame = document.getElementById('game-frame');
+const timer = document.getElementById('timer');
+const historyContainer = document.getElementById('history');
+const tickSound = new Audio('/sounds/tick.mp3');
+const resultSound = new Audio('/sounds/result.wav');
+
+console.log('Bet Lists:', {
+  redEl: document.getElementById('red-bets'),
+  greenEl: document.getElementById('green-bets'),
+  blackEl: document.getElementById('black-bets')
+});
+
+const betLists = {
+  red: document.getElementById('red-bets'),
+  green: document.getElementById('green-bets'),
+  black: document.getElementById('black-bets')
+};
+const betTotals = {
+  red: 0,
+  green: 0,
+  black: 0
+};
+
+let lastColor = null;
+let maxBetAmount = 1000;
+let currentUser = null;
+let currentBalance = 0;
+
+socket.on('updateState', (state) => {
+  if (state.currentPhase === 'cooldown') {
+    frame.style.backgroundColor = 'transparent';
+    timer.textContent = `Next round in: ${state.timeRemaining}s`;
+  } else {
+    timer.textContent = 'Rolling...';
+    frame.style.backgroundColor = state.currentColor;
+    
+    if (state.currentColor !== lastColor) {
+      if (state.currentPhase === 'flashing') {
+        tickSound.play();
+      } else if (state.currentPhase === 'result') {
+        resultSound.play();
+      }
+      lastColor = state.currentColor;
+    }
+  }
+
+  if (state.currentPhase === 'cooldown' && state.timeRemaining === 15) {
+    clearBets();
+  }
+
+  if (state.history) {
+    updateHistory(state.history);
+  }
+});
+
+socket.on('currentRoundBets', (bets) => {
+  // Clear all bet lists
+  Object.values(betLists).forEach(list => {
+    list.innerHTML = '';
+  });
+  
+  // Reset totals
+  Object.keys(betTotals).forEach(color => {
+    betTotals[color] = 0;
+  });
+
+  // Add each bet to the display
+  bets.forEach(bet => {
+    addBetToDisplay({
+      color: bet.color,
+      amount: bet.amount,
+      username: bet.username,
+      avatar: bet.avatar
+    });
+  });
+});
+
+// Update clearBets to only clear UI elements
+function clearBets() {
+  Object.values(betLists).forEach(list => {
+    list.innerHTML = '';
+  });
+  
+  Object.keys(betTotals).forEach(color => {
+    betTotals[color] = 0;
+    updateTotalAmount(color);
+  });
+}
+
+function clearBets() {
+  ['red', 'green', 'black'].forEach(color => {
+    betLists[color].innerHTML = '';
+    betTotals[color] = 0;
+    updateTotalAmount(color);
+  });
+}
+
+function addBetToDisplay(bet) {
+      const betElement = document.createElement('div');
+      betElement.className = 'bet-item';
+      betElement.innerHTML = `
+        <div class="bet-user-info">
+          <img src="${bet.avatar}" alt="${bet.username}" class="bet-user-avatar">
+          <span class="bet-user-name">${bet.username}</span>
+        </div>
+        <span class="bet-amount">$${bet.amount.toFixed(2)}</span>
+      `;
+
+      const list = betLists[bet.color];
+      list.insertBefore(betElement, list.firstChild);
+      
+      if (list.scrollHeight > list.clientHeight) {
+        list.classList.add('full');
+      }
+      
+      betTotals[bet.color] += bet.amount;
+      updateTotalAmount(bet.color);
+    }
+
+function updateTotalAmount(color) {
+  console.log('Updating total for color:', color);
+  const totalElement = document.querySelector(`.${color}-bets .total-amount`);
+  console.log('Total element found:', totalElement);
+  
+  if (totalElement) {
+    totalElement.textContent = `$${betTotals[color].toFixed(2)}`;
+    console.log('New total amount:', betTotals[color]);
+  }
+}
+
+socket.on('betPlaced', (betData) => {
+  addBetToDisplay(betData);
+});
+
+function updateHistory(history) {
+  historyContainer.innerHTML = '';
+  const recentHistory = history.slice(0, 10);
+  recentHistory.forEach(roll => {
+    const item = document.createElement('div');
+    item.className = `history-item history-${roll.color}`;
+    historyContainer.appendChild(item);
+  });
+}
+
+async function checkBalance() {
+  if (!currentUser) return;
+  
+  try {
+    const response = await fetch('/api/user');
+    const user = await response.json();
+    
+    if (user && user.balance !== undefined) {
+      const newBalance = parseFloat(user.balance);
+      const balanceElement = document.querySelector('.user-balance');
+      
+      if (balanceElement && currentBalance !== newBalance) {
+        balanceElement.textContent = `$${newBalance.toFixed(2)}`;
+        
+        if (newBalance > currentBalance) {
+          balanceElement.classList.remove('balance-decrease');
+          balanceElement.classList.add('balance-increase');
+          setTimeout(() => balanceElement.classList.remove('balance-increase'), 1000);
+        } else if (newBalance < currentBalance) {
+          balanceElement.classList.remove('balance-increase');
+          balanceElement.classList.add('balance-decrease');
+          setTimeout(() => balanceElement.classList.remove('balance-decrease'), 1000);
+        }
+        
+        currentBalance = newBalance;
+      }
+    }
+  } catch (error) {
+    console.error('Error checking balance:', error);
+  }
+}
+
+function initBalanceChecker() {
+  checkBalance();
+  setInterval(checkBalance, 100);
+}
+
+function updateNavigation() {
+  fetch('/api/user')
+    .then(res => res.json())
+    .then(user => {
+      const navLinks = document.querySelector('.nav-links');
+      if (user) {
+        currentUser = user;
+        currentBalance = parseFloat(user.balance);
+        navLinks.innerHTML = `
+          <a href="#" class="user-profile">
+            <img src="${user.avatar}" alt="${user.username}">
+            <span class="user-name">${user.username}</span>
+            <span class="user-balance">$${currentBalance.toFixed(2)}</span>
+          </a>
+          <a href="/logout">Logout</a>
+        `;
+        initBalanceChecker();
+      } else {
+        currentUser = null;
+        currentBalance = 0;
+        navLinks.innerHTML = `
+          <a href="/auth/steam">
+            <img src="https://community.cloudflare.steamstatic.com/public/images/signinthroughsteam/sits_01.png" 
+                 height="24" style="vertical-align: middle;">
+          </a>
+        `;
+      }
+    });
+}
+
+const chatInput = document.querySelector('.chat-input');
+const chatMessages = document.querySelector('.chat-messages');
+
+fetch('/api/user')
+  .then(res => res.json())
+  .then(user => {
+    currentUser = user;
+  });
+
+chatInput.addEventListener('keypress', function(e) {
+  if (e.key === 'Enter' && this.value.trim() !== '' && currentUser) {
+    const message = {
+      content: this.value.trim(),
+      user: currentUser,
+      timestamp: new Date().toISOString()
+    };
+    
+    socket.emit('chatMessage', message);
+    this.value = '';
+  }
+});
+
+socket.on('chatMessage', messages => {
+  chatMessages.innerHTML = '';
+  
+  messages.forEach(message => {
+    const messageElement = document.createElement('div');
+    messageElement.className = 'chat-message';
+    
+    messageElement.innerHTML = `
+      <div class="message-header">
+        <img src="${message.user.avatar}" alt="${message.user.username}" class="message-avatar">
+        <span class="message-username">${message.user.username}</span>
+        <span class="message-time">
+          ${new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+        </span>
+      </div>
+      <div class="message-content">${message.content}</div>
+    `;
+    
+    chatMessages.appendChild(messageElement);
+  });
+  
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+});
+
+const betInput = document.querySelector('.bet-input');
+const betButtons = document.querySelectorAll('.bet-color');
+
+betButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    if (!currentUser) {
+      alert('Please login to place bets');
+      return;
+    }
+
+    const amount = parseFloat(betInput.value);
+    if (!amount || amount <= 0) {
+      alert('Please enter a valid bet amount');
+      return;
+    }
+
+    const color = button.classList.contains('bet-red') ? 'red' : 
+                 button.classList.contains('bet-green') ? 'green' : 'black';
+
+    socket.emit('placeBet', { amount, color });
+  });
+});
+
+function updateBalance(newBalance) {
+  userBalance = newBalance;
+  const balanceElement = document.querySelector('.user-balance');
+  if (balanceElement) {
+    balanceElement.textContent = `$${parseFloat(newBalance).toFixed(2)}`;
+  }
+}
+
+socket.on('betResponse', (response) => {
+  if (response.success) {
+    updateBalance(response.newBalance);
+  } else {
+    alert(response.error);
+  }
+});
+
+document.addEventListener('DOMContentLoaded', updateNavigation);
+  </script>
+</body>
+</html>
