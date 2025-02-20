@@ -2,6 +2,9 @@
 
 *Built this in a few days when I was bored and wanted to experiment with real-time gaming using Node.js. Turned out pretty decent!*
 
+![image](https://github.com/user-attachments/assets/2358624a-d0bf-43b5-8d73-4b9a463a9538)
+
+
 ## ⚠️ Known Issues
 * Some race conditions in balance updates
 * Occasional socket disconnects
@@ -18,6 +21,9 @@
 * Transaction handling with MySQL
 * Automatic game state management
 * Balance tracking & betting system
+
+* ![image](https://github.com/user-attachments/assets/2ab51ae6-cf24-46e1-a3a4-1bd079f253c0)
+
 
 ## Tech Stack
 * Node.js & Express
